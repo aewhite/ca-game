@@ -2,8 +2,10 @@ package net.andrewewhite.cagame
 
 import org.eclipse.collections.api.list.ListIterable
 import org.eclipse.collections.api.list.MutableList
+import org.eclipse.collections.api.list.primitive.MutableByteList
 import org.eclipse.collections.api.tuple.primitive.IntIntPair
 import org.eclipse.collections.impl.factory.Lists
+import org.eclipse.collections.impl.factory.primitive.ByteLists
 import org.eclipse.collections.impl.list.mutable.FastList
 
 
@@ -35,10 +37,15 @@ class World (
 }
 
 class LocalEnvironment(
-        x: Int,
-        y: Int,
-        radius: Int,
-        world: World) {
+        private val x: Int,
+        private val y: Int,
+        private val radius: Int,
+        private val world: World) {
+
+    fun viewCell(dx: Int, dy: Int): CellView {
+        if (Math.abs(dx) > radius || Math.abs(dy) > radius) { return world.outOfBoundsCell }
+        return world[x + dx, y + dy]
+    }
 }
 
 interface CellView {
@@ -59,8 +66,9 @@ class Agent(
         override val playerId: Int,
         override var hp: Int,
         var coordinate: IntIntPair,
-        val logic: (LocalEnvironment) -> Action): AgentView {
+        val logic: (LocalEnvironment, MutableByteList) -> Action): AgentView {
 
+    val memory: MutableByteList = ByteLists.mutable.empty()
     val neighbors: MutableList<Agent> = Lists.mutable.empty()
     var friendlyNeighborCount: Int = 0
     var enemyNeighborCount: Int = 0

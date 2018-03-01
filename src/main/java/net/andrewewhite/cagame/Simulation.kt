@@ -159,7 +159,7 @@ class Simulation(
         val localEnvironment = world.buildLocalEnvironment(
                 x = agent.coordinate.one,
                 y = agent.coordinate.two)
-        val action = agent.logic.invoke(localEnvironment)
+        val action = agent.logic.invoke(localEnvironment, agent.memory)
         handleAction(agent, action)
     }
 

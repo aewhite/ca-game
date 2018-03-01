@@ -2,11 +2,12 @@ package net.andrewewhite.cagame.agents.logic
 
 import net.andrewewhite.cagame.Agent
 import net.andrewewhite.cagame.LocalEnvironment
+import org.eclipse.collections.api.list.primitive.MutableByteList
 import java.util.*
 
 class RandomAgentLogic {
     companion object {
-        fun live(localEnvironment: LocalEnvironment): Agent.Action {
+        fun live(localEnvironment: LocalEnvironment, memory: MutableByteList): Agent.Action {
             return when (Random().nextInt(3)) {
                 0 -> Agent.Action.None()
                 1 -> Agent.Action.Move(randomDirection())
