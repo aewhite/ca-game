@@ -1,1 +1,1 @@
-# ca-game
+# Cellular Automaton Game
