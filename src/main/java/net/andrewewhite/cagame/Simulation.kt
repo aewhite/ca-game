@@ -10,7 +10,7 @@ import javafx.scene.image.WritableImage
 import javafx.scene.paint.Color
 import javafx.stage.Stage
 import net.andrewewhite.cagame.agents.logic.RandomAgentLogic
-import net.andrewewhite.cagame.agents.logic.ReplicatorAgentLogic
+import net.andrewewhite.cagame.agents.logic.SimpleAgentLogic
 import org.eclipse.collections.api.list.ListIterable
 import org.eclipse.collections.impl.factory.Lists
 import org.eclipse.collections.impl.factory.primitive.IntLists
@@ -65,7 +65,7 @@ class SimulationApplication: Application() {
             val agentA = Agent(
                     playerId = 1,
                     hp = 10,
-                    coordinate = PrimitiveTuples.pair(10, 10),
+                    coordinate = PrimitiveTuples.pair(128, 128),
                     logic = RandomAgentLogic.Companion::live)
 
             this.world.addAgent(agentA)
@@ -73,8 +73,8 @@ class SimulationApplication: Application() {
             val agentB = Agent(
                     playerId = 2,
                     hp = 10,
-                    coordinate = PrimitiveTuples.pair(this.world.width - 50, this.world.height - 50),
-                    logic = ReplicatorAgentLogic.Companion::live)
+                    coordinate = PrimitiveTuples.pair(this.world.width - 10, this.world.height - 10),
+                    logic = SimpleAgentLogic.Companion::live)
 
             this.world.addAgent(agentB)
         }

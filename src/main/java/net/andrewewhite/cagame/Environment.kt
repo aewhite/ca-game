@@ -39,7 +39,7 @@ class World (
 class LocalEnvironment(
         private val x: Int,
         private val y: Int,
-        private val radius: Int,
+        val radius: Int,
         private val world: World) {
 
     fun viewCell(dx: Int, dy: Int): CellView {
@@ -82,7 +82,23 @@ class Agent(
             SOUTH(0, 1),
             SOUTH_WEST(-1, 1),
             WEST(-1, 0),
-            NORTH_WEST(-1, -1)
+            NORTH_WEST(-1, -1);
+
+            companion object {
+                fun fromDelta(dx: Int, dy: Int): Direction {
+                    return when {
+                        dx ==  0 && dy == -1 -> NORTH
+                        dx ==  1 && dy == -1 -> NORTH_EAST
+                        dx ==  1 && dy ==  0 -> EAST
+                        dx ==  1 && dy ==  1 -> SOUTH_EAST
+                        dx ==  0 && dy ==  1 -> SOUTH
+                        dx == -1 && dy ==  1 -> SOUTH_WEST
+                        dx == -1 && dy ==  0 -> WEST
+                        dx == -1 && dy == -1 -> NORTH_WEST
+                        else -> throw IllegalArgumentException()
+                    }
+                }
+            }
         }
 
         class None: Action()
@@ -90,3 +106,4 @@ class Agent(
         data class Reproduce(val direction: Direction): Action()
     }
 }
+
